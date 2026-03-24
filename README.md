@@ -1,5 +1,9 @@
 ﻿# hanime-hunter
 
+> 说明：当前仓库中的新增界面、文档整理与部分改动，主要由 AI 辅助生成与重构，基于原项目 [hanime-hunter](https://github.com/acgtools/hanime-hunter) 继续修改而来。
+>
+> 原项目作者的工作是这个版本的基础。如果现在这份代码还有写得不够好的地方，还请各位大佬勿喷，欢迎温和指出问题与改进建议。
+
 `hanime-hunter` 是一个面向 `hanime1.me` 与 `hanime.tv` 的下载工具，当前提供两种使用方式：
 
 - 原生 Windows GUI：适合日常使用，支持预览、缩略图、任务队列、进度条与设置面板
