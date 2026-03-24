@@ -2,13 +2,11 @@
 
 ![](https://unv-shield.librian.net/api/unv_shield?txt=绅士&scale=1.3)![](https://unv-shield.librian.net/api/unv_shield?repo=acgtools/hanime-hunter&scale=1.7)![](https://unv-shield.librian.net/api/unv_shield?txt=好！&scale=2.0)
 
-English | [简体中文](./README_ZH_CN.md)
+用于下载里番的 CLI 工具。
 
-A CLI app to download HAnime.
+如果你喜欢这个程序，可以帮忙给一个 star (o゜▽゜)o☆ ，谢谢 OwO。
 
-If you like this repo, please consider giving it a star (o゜▽゜)o☆ . Thank you OwO.
-
-> Random Wink OvO
+> 随机 Wink OvO
 
 <!-- If you want to deploy your own service for random waifu. Check: https://github.com/dreamjz/waifu-getter -->
 
@@ -24,28 +22,34 @@ If you like this repo, please consider giving it a star (o゜▽゜)o☆ . Thank
 -->
 ![](https://political-capable-roll.glitch.me/get/@acg_tools_hanime_hunter?theme=rule34)
 
-## Choose your faction
+## 选择你的阵营
 
-Check [here](https://github.com/acgtools/hanime-hunter/issues/3) and chooes a reaction:  Pure Love Knight ❤️, NTR Warrior：🚀
+点击 [这里](https://github.com/acgtools/hanime-hunter/issues/3) 然后选择一个表情：纯爱战士 ❤️, 牛头人：🚀
 
 <img src="https://raw.githubusercontent.com/dreamjz/pics/main/pics/2023/202312102326405.jpg" height=180> <img src="https://github-issue-vote.vercel.app/vote?issue=https://github.com/acgtools/hanime-hunter/issues/3" height=190> <img src="https://raw.githubusercontent.com/dreamjz/pics/main/pics/2023/202312102326670.jpg" height=180>
 
-<!--ts-->
-
 * [hanime-hunter](#hanime-hunter)
-   * [Choose your faction](#choose-your-faction)
-   * [Installation](#installation)
-      * [Using go](#using-go)
-      * [Download from releases](#download-from-releases)
-   * [Supported Site](#supported-site)
-   * [Community](#community)
-   * [Quick Start](#quick-start)
-      * [Prerequisites](#prerequisites)
-         * [Ensure that your terminal charset is UTF-8](#ensure-that-your-terminal-charset-is-utf-8)
+   * [选择你的阵营](#选择你的阵营)
+   * [安装](#安装)
+      * [使用 go](#使用-go)
+      * [从 releases 页面下载](#从-releases-页面下载)
+   * [支持的网站](#支持的网站)
+   * [社区](#社区)
+   * [快速开始](#快速开始)
+      * [前提条件](#前提条件)
+         * [确保你的终端字符集为 UTF-8](#确保你的终端字符集为-utf-8)
          * [FFmpeg](#ffmpeg)
       * [Command Help](#command-help)
          * [Download](#download)
    * [Hanime1me](#hanime1me)
+      * [只下载一个视频](#只下载一个视频)
+      * [下载整个系列](#下载整个系列)
+         * [跳过已下载的文件](#跳过已下载的文件)
+      * [下载播放清单](#下载播放清单)
+      * [指定输出路径](#指定输出路径)
+      * [指定画质](#指定画质)
+      * [只获取可下载的文件信息](#只获取可下载的文件信息)
+   * [Hanimetv](#hanimetv)
       * [Only one episode](#only-one-episode)
       * [Full series based on the specified episode](#full-series-based-on-the-specified-episode)
          * [Skip downloaded files](#skip-downloaded-files)
@@ -53,49 +57,39 @@ Check [here](https://github.com/acgtools/hanime-hunter/issues/3) and chooes a re
       * [Specify the output directory](#specify-the-output-directory)
       * [Specify the quality](#specify-the-quality)
       * [Get info only](#get-info-only)
-   * [Hanimetv](#hanimetv)
-      * [Only one episode](#only-one-episode-1)
-      * [Full series based on the specified episode](#full-series-based-on-the-specified-episode-1)
-         * [Skip downloaded files](#skip-downloaded-files-1)
-      * [Download playlist](#download-playlist-1)
-      * [Specify the output directory](#specify-the-output-directory-1)
-      * [Specify the quality](#specify-the-quality-1)
-      * [Get info only](#get-info-only-1)
    * [Issue](#issue)
    * [Star History](#star-history)
 
-<!--te-->
+## 安装
 
-## Installation
-
-### Using `go`
+### 使用 `go`
 
 ```sh
 $ go install -ldflags "-s -w" github.com/acgtools/hanime-hunter@latest
 ```
 
-### Download from releases
+### 从 releases 页面下载
 
 [release page](https://github.com/acgtools/hanime-hunter/releases)
 
-## Supported Site
+## 支持的网站
 
-> **NSFW** Warning, the following site may contain sensitive content.
+> **NSFW** 警告, 以下站点包含敏感内容.
 
 | Site       | Language | Episode | Series | Playlist | Status    |
 | ---------- | -------- | ------- | ------ | -------- | --------- |
-| hanime1.me | Chinese  | ✓       | ✓      | ✓        | Available |
+| hanime1.me | 中文     | ✓       | ✓      | ✓        | Available |
 | hanime.tv  | English  | ✓       | ✓      | ✓        | Available |
 
-## Community
+## 社区
 
 [Discord](https://discord.gg/rrJQWNFa)
 
-## Quick Start
+## 快速开始
 
-### Prerequisites
+### 前提条件
 
-#### Ensure that your terminal charset is UTF-8
+#### 确保你的终端字符集为 UTF-8
 
 **Windows**
 
@@ -107,15 +101,15 @@ Active code page: 65001
 > chcp 65001
 ```
 
-If you want to set the default charset, follow the steps:
+如果你想修改默认的字符集, 按照以下步骤:
 
-1. Start -> Run -> regedit
-2. Go to `[HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\Autorun]`
-3. Change the value to `@chcp 65001>nul`
+1. 开始 -> 运行 -> regedit
+2. 找到 `[HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\Autorun]`
+3. 将其值修改为 `@chcp 65001>nul`
 
-If `Autorun` is not present, you can add a `New String`.
+如果 `Autorun` 不存在, 你可以创建一个新的字符串类型的键值对.
 
-This approach will auto-execute `@chcp 65001>nul` when `cmd` starts.
+此方法将在`cmd` 启动时自动执行 `@chcp 65001>nul`。
 
 **Linux**
 
@@ -173,40 +167,40 @@ Global Flags:
 
 ## Hanime1me
 
-### Only one episode
+### 只下载一个视频
 
-The default quality will be the highest quality.
+默认下载最高画质。
 
 ```sh
-# Download from the watch page
-# The anime will be saved in ./anime_series_title/
+# 从观看页下载
+# 视频会保存在 ./番剧名称/
 $ hani dl https://hanime1.me/watch?v=xxxx
 ```
 
 ![](./docs/assets/hanime1me/single_file.gif)
 
-### Full series based on the specified episode
+### 下载整个系列
 
 ```sh
-# Download the full series
-# E.g. If you provide the link of the Anime_Foo_02
-# then the full series of Anime_Foo will be downloaded (Anime_Foo_01, Anime_Foo_02, ...)
+# 下载整个系列
+# E.g. 比如你给的 Anime_Foo_02 的链接
+# 会将 Anime_Foo 整个系列全部下载下来 (Anime_Foo_01, Anime_Foo_02, ...)
 $ hani dl -s https://hanime1.me/watch?v=xxxx
 ```
 
 ![](./docs/assets/hanime1me/series.gif)
 
-#### Skip downloaded files
+#### 跳过已下载的文件
 
-If some files get stuck during downloading, stop the program and then restart the download.
+如果下载时有些文件卡住了，可以停止程序，然后重新开始下载。
 
-It will skip the files that have already been downloaded.
+已经完成的文件会被跳过。
 
 ![](./docs/assets/hanime1me/dl_stuck.gif)
 
 ![](./docs/assets/hanime1me/restart.gif)
 
-### Download playlist
+### 下载播放清单
 
 ```sh
 $ hani dl https://hanime1.me/playlist?list=xxxx
@@ -214,26 +208,26 @@ $ hani dl https://hanime1.me/playlist?list=xxxx
 
 ![](./docs/assets/hanime1me/playlist.gif)
 
-### Specify the output directory
+### 指定输出路径
 
 ```sh
 # The anime will be saved in output_dir/anime_series_title/
 $ hani dl -o <output_dir>
 ```
 
-### Specify the quality
+### 指定画质
 
 ```sh
-# You can specify the quality of video
-# if it is not exist, the default (highest quality) will be downloaded
+# 你可以指定画质
+# 如果指定的画质不存在，默认下载最高画质
 $ hani dl -q "720p" https://hanime1.me/watch?v=xxxx
 ```
 
-### Get info only
+### 只获取可下载的文件信息
 
 ```sh
-# Get only the downloadable video info:
-# title, quality, file extension
+# 获取下载文件信息:
+# 标题, 画质, 文件类型
 $ hani dl -i https://hanime1.me/watch?v=xxxx
 ```
 
@@ -263,9 +257,7 @@ $ hani dl -s https://hanime.tv/videos/hentai/xxx
 
 #### Skip downloaded files
 
-If some files get stuck during downloading, stop the program and then restart the download.
-
-It will skip the files that have already been downloaded.
+Not supported
 
 ### Download playlist
 
@@ -301,7 +293,7 @@ $ hani dl -i https://hanime.tv/videos/hentai/xxx
 
 ## Issue
 
-Feel free to create issues to report bugs or request new features.
+欢迎创建 issue 来报告 bug 或者 请求添加新特性。
 
 ## Star History
 
