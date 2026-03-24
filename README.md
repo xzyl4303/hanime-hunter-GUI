@@ -1,308 +1,289 @@
-# hanime-hunter
+﻿# hanime-hunter
 
-![](https://unv-shield.librian.net/api/unv_shield?txt=绅士&scale=1.3)![](https://unv-shield.librian.net/api/unv_shield?repo=acgtools/hanime-hunter&scale=1.7)![](https://unv-shield.librian.net/api/unv_shield?txt=好！&scale=2.0)
+`hanime-hunter` 是一个面向 `hanime1.me` 与 `hanime.tv` 的下载工具，当前提供两种使用方式：
 
-English | [简体中文](./README_ZH_CN.md)
+- 原生 Windows GUI：适合日常使用，支持预览、缩略图、任务队列、进度条与设置面板
+- CLI 命令行：适合脚本化、批量下载与调试
 
-A CLI app to download HAnime.
+当前项目以原生 GUI 为主，不再推荐使用旧版 WebUI。
 
-If you like this repo, please consider giving it a star (o゜▽゜)o☆ . Thank you OwO.
+## 功能特性
 
-> Random Wink OvO
+- 支持 `hanime1.me`、`hanime.tv`
+- 支持单集下载、整季/全集下载、播放列表下载
+- 支持下载前预览视频信息与缩略图
+- 支持质量选择：`自动选择`、`1080p`、`720p`、`480p`、`360p`、`240p`
+- 支持重试次数设置
+- 支持下载线程数设置，范围 `1-64`
+- 支持 GUI 任务并发设置，范围 `1-16`
+- 支持系统代理与环境变量代理
+- 支持结构化日志、失败重试、任务取消、清理已完成任务
+- 支持响应式 GUI 布局、自动适应屏幕尺寸
+- 支持 GUI 默认设置持久化保存
 
-<!-- If you want to deploy your own service for random waifu. Check: https://github.com/dreamjz/waifu-getter -->
+## 支持站点
 
-<img src="https://waifu-getter.vercel.app/sfw?eps=wink" />
+> NSFW 警告：以下站点可能包含成人内容。
 
-<br />
+| 站点 | 单集 | 整季/全集 | 播放列表 | 说明 |
+| --- | --- | --- | --- | --- |
+| `hanime1.me` | 支持 | 支持 | 支持 | 中文站点 |
+| `hanime.tv` | 支持 | 支持 | 支持 | 英文站点 |
 
-<!--
-  If you want to use your own Moe-Counter
-  please refer to the tutorial
-  in its original repo: https://github.com/journey-ad/Moe-Counter
-  and deploy it to the Replit or Glitch
--->
-![](https://political-capable-roll.glitch.me/get/@acg_tools_hanime_hunter?theme=rule34)
+## 运行环境
 
-## Choose your faction
+### GUI
 
-Check [here](https://github.com/acgtools/hanime-hunter/issues/3) and chooes a reaction:  Pure Love Knight ❤️, NTR Warrior：🚀
+- Windows 10 / 11
+- 建议安装 `FFmpeg`
 
-<img src="https://raw.githubusercontent.com/dreamjz/pics/main/pics/2023/202312102326405.jpg" height=180> <img src="https://github-issue-vote.vercel.app/vote?issue=https://github.com/acgtools/hanime-hunter/issues/3" height=190> <img src="https://raw.githubusercontent.com/dreamjz/pics/main/pics/2023/202312102326670.jpg" height=180>
+### CLI / 源码构建
 
-<!--ts-->
+- Go `1.21` 或更高版本
+- 建议安装 `FFmpeg`
 
-* [hanime-hunter](#hanime-hunter)
-   * [Choose your faction](#choose-your-faction)
-   * [Installation](#installation)
-      * [Using go](#using-go)
-      * [Download from releases](#download-from-releases)
-   * [Supported Site](#supported-site)
-   * [Community](#community)
-   * [Quick Start](#quick-start)
-      * [Prerequisites](#prerequisites)
-         * [Ensure that your terminal charset is UTF-8](#ensure-that-your-terminal-charset-is-utf-8)
-         * [FFmpeg](#ffmpeg)
-      * [Command Help](#command-help)
-         * [Download](#download)
-   * [Hanime1me](#hanime1me)
-      * [Only one episode](#only-one-episode)
-      * [Full series based on the specified episode](#full-series-based-on-the-specified-episode)
-         * [Skip downloaded files](#skip-downloaded-files)
-      * [Download playlist](#download-playlist)
-      * [Specify the output directory](#specify-the-output-directory)
-      * [Specify the quality](#specify-the-quality)
-      * [Get info only](#get-info-only)
-   * [Hanimetv](#hanimetv)
-      * [Only one episode](#only-one-episode-1)
-      * [Full series based on the specified episode](#full-series-based-on-the-specified-episode-1)
-         * [Skip downloaded files](#skip-downloaded-files-1)
-      * [Download playlist](#download-playlist-1)
-      * [Specify the output directory](#specify-the-output-directory-1)
-      * [Specify the quality](#specify-the-quality-1)
-      * [Get info only](#get-info-only-1)
-   * [Issue](#issue)
-   * [Star History](#star-history)
+## 快速开始
 
-<!--te-->
+### 直接使用已编译程序
 
-## Installation
+如果你已经拿到了打包目录，优先使用：
 
-### Using `go`
+- GUI：`bulid/package/hanime-hunter-gui.exe`
+- CLI：`bulid/package/hanime-hunter.exe`
 
-```sh
-$ go install -ldflags "-s -w" github.com/acgtools/hanime-hunter@latest
+如果你在项目根目录直接使用，也可以运行：
+
+- GUI：`hanime-hunter-gui.exe`
+- CLI：`hanime-hunter.exe`
+
+### 从源码编译
+
+在项目根目录执行：
+
+```powershell
+go build -o .\hanime-hunter.exe .
+go build -ldflags='-H windowsgui' -o .\hanime-hunter-gui.exe .
 ```
 
-### Download from releases
+### 打包目录说明
 
-[release page](https://github.com/acgtools/hanime-hunter/releases)
+当前项目约定了一个 `bulid` 目录用于整理源码和成品：
 
-## Supported Site
+- `bulid/source`：源码副本
+- `bulid/package`：可执行文件与说明文档
 
-> **NSFW** Warning, the following site may contain sensitive content.
+## GUI 使用说明
 
-| Site       | Language | Episode | Series | Playlist | Status    |
-| ---------- | -------- | ------- | ------ | -------- | --------- |
-| hanime1.me | Chinese  | ✓       | ✓      | ✓        | Available |
-| hanime.tv  | English  | ✓       | ✓      | ✓        | Available |
+### 启动 GUI
 
-## Community
+推荐直接双击：
 
-[Discord](https://discord.gg/rrJQWNFa)
-
-## Quick Start
-
-### Prerequisites
-
-#### Ensure that your terminal charset is UTF-8
-
-**Windows**
-
-```cmd
-> chcp
-Active code page: 65001
-
-# if code page is not 65001(utf-8), change it temporarily
-> chcp 65001
+```text
+hanime-hunter-gui.exe
 ```
 
-If you want to set the default charset, follow the steps:
+也可以通过命令行启动：
 
-1. Start -> Run -> regedit
-2. Go to `[HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\Autorun]`
-3. Change the value to `@chcp 65001>nul`
-
-If `Autorun` is not present, you can add a `New String`.
-
-This approach will auto-execute `@chcp 65001>nul` when `cmd` starts.
-
-**Linux**
-
-```sh
-$ echo $LANG
-en_US.UTF-8
+```powershell
+.\hanime-hunter.exe gui
 ```
 
-#### FFmpeg
+### 基本下载流程
 
-- [FFmpeg](https://www.ffmpeg.org/)
+1. 打开 GUI
+2. 粘贴 `hanime1.me` 或 `hanime.tv` 链接
+3. 点击 `预览信息`
+4. 选择输出目录、质量、重试次数、线程数
+5. 点击 `开始下载`
+6. 在右侧查看 `预览 / 详情 / 日志 / 设置`
 
-### Command Help
+### GUI 支持的主要能力
 
-```sh
-$ hani -h
-HAnime downloader. Repo: https://github.com/acgtools/hanime-hunter
+- 视频缩略图预览
+- 任务进度条与实时速度显示
+- 失败任务重试
+- 取消选中任务
+- 自动打开输出目录
+- 自动预览链接
+- 下载失败自动切换到日志页
+- 默认下载参数保存
+- 多任务并发下载控制
 
-Usage:
-  hani [command]
+### 设置面板说明
 
-Available Commands:
-  dl          download
-  help        Help about any command
-  version     Print version info
+GUI 右侧 `设置` 标签页支持保存以下默认值：
 
-Flags:
-  -h, --help               help for hani
-      --log-level string   log level, options: debug, info, warn, error, fatal (default "info")
+- 默认输出目录
+- 默认工作目录
+- 默认质量
+- 默认重试次数
+- 默认线程数
+- 默认超时秒数
+- 默认日志级别
+- 默认仅获取信息
+- 默认整季/全集
+- 默认最低质量
+- 任务并发上限 `1-16`
+- 粘贴链接后自动预览
+- 下载完成后自动打开输出目录
+- 新任务加入后自动选中
+- 任务失败时自动切换到日志页
 
-Use "hani [command] --help" for more information about a command.
+GUI 设置文件默认保存在：
+
+```text
+%AppData%\hanime-hunter\gui-settings.json
 ```
 
-#### Download
+## CLI 使用说明
 
-```sh
-$ hani help dl
-download
+### 查看帮助
 
-Usage:
-  hani dl [flags]
-
-Flags:
-  -h, --help                help for dl
-  -i, --info                get anime info only
-      --low-quality         download the lowest quality video
-  -o, --output-dir string   output directory
-  -q, --quality string      specify video quality. e.g. 1080p, 720p, 480p ...
-      --retry uint8         number of retries, max 255 (default 10)
-  -s, --series              download full series
-
-Global Flags:
-      --log-level string   log level, options: debug, info, warn, error, fatal (default "info")
+```powershell
+.\hanime-hunter.exe -h
+.\hanime-hunter.exe dl -h
+.\hanime-hunter.exe gui -h
 ```
 
-## Hanime1me
+### 常用命令
 
-### Only one episode
+下载单个视频：
 
-The default quality will be the highest quality.
-
-```sh
-# Download from the watch page
-# The anime will be saved in ./anime_series_title/
-$ hani dl https://hanime1.me/watch?v=xxxx
+```powershell
+.\hanime-hunter.exe dl "https://hanime1.me/watch?v=94898"
 ```
 
-![](./docs/assets/hanime1me/single_file.gif)
+下载整季 / 全集：
 
-### Full series based on the specified episode
-
-```sh
-# Download the full series
-# E.g. If you provide the link of the Anime_Foo_02
-# then the full series of Anime_Foo will be downloaded (Anime_Foo_01, Anime_Foo_02, ...)
-$ hani dl -s https://hanime1.me/watch?v=xxxx
+```powershell
+.\hanime-hunter.exe dl "https://hanime1.me/watch?v=94898" --series
 ```
 
-![](./docs/assets/hanime1me/series.gif)
+只获取视频信息，不实际下载：
 
-#### Skip downloaded files
-
-If some files get stuck during downloading, stop the program and then restart the download.
-
-It will skip the files that have already been downloaded.
-
-![](./docs/assets/hanime1me/dl_stuck.gif)
-
-![](./docs/assets/hanime1me/restart.gif)
-
-### Download playlist
-
-```sh
-$ hani dl https://hanime1.me/playlist?list=xxxx
+```powershell
+.\hanime-hunter.exe dl "https://hanime1.me/watch?v=94898" --info
 ```
 
-![](./docs/assets/hanime1me/playlist.gif)
+指定输出目录、质量、线程数与重试次数：
 
-### Specify the output directory
-
-```sh
-# The anime will be saved in output_dir/anime_series_title/
-$ hani dl -o <output_dir>
+```powershell
+.\hanime-hunter.exe dl "https://hanime1.me/watch?v=94898" `
+  --output-dir "D:\Downloads\HAnime" `
+  --quality 720p `
+  --threads 32 `
+  --retry 10
 ```
 
-### Specify the quality
+启动 GUI 并指定任务并发上限：
 
-```sh
-# You can specify the quality of video
-# if it is not exist, the default (highest quality) will be downloaded
-$ hani dl -q "720p" https://hanime1.me/watch?v=xxxx
+```powershell
+.\hanime-hunter.exe gui --max-concurrent 4
 ```
 
-### Get info only
+### CLI 参数说明
 
-```sh
-# Get only the downloadable video info:
-# title, quality, file extension
-$ hani dl -i https://hanime1.me/watch?v=xxxx
+#### `dl`
+
+- `--output-dir`：输出目录
+- `--quality`：指定质量，例如 `1080p`、`720p`
+- `--info`：仅获取信息
+- `--low-quality`：下载最低清晰度
+- `--retry`：重试次数，默认 `10`
+- `--series`：下载整季 / 全集
+- `--threads`：下载线程数，范围 `1-64`
+
+#### 全局参数
+
+- `--log-level`：日志级别，可选 `debug`、`info`、`warn`、`error`、`fatal`
+
+## 代理说明
+
+项目默认支持以下代理来源：
+
+- 环境变量代理，例如 `HTTP_PROXY`、`HTTPS_PROXY`
+- 系统代理设置
+
+也就是说，如果你的系统已经配置了代理，程序会优先复用，不需要额外再开独立代理。
+
+## FFmpeg 说明
+
+部分视频流在下载或合并时依赖 `FFmpeg`。如果你遇到下载后无法正确合并、转封装或播放异常，优先确认：
+
+```powershell
+ffmpeg -version
 ```
 
-## Hanimetv
-### Only one episode
+如果命令不存在，请先安装 `FFmpeg` 并加入系统 `PATH`。
 
-The default quality will be the highest quality.
+## 常见问题
 
-```sh
-# Download from the watch page
-# The anime will be saved in ./anime_series_title/
-$ hani dl https://hanime.tv/videos/hentai/xxx
+### 1. 双击 GUI 没有反应
+
+建议按这个顺序检查：
+
+1. 使用最新的 `hanime-hunter-gui.exe`
+2. 查看任务管理器里是否已有旧的 `hanime-hunter-gui.exe` 进程
+3. 结束旧进程后重新双击启动
+4. 如果程序弹出错误框，按错误内容排查依赖或权限问题
+
+### 2. 命令行中文乱码
+
+Windows 终端建议切到 UTF-8：
+
+```powershell
+chcp 65001
 ```
 
-![](./docs/assets/hanimetv/single_file.gif)
+### 3. 下载失败、超时、EOF 或站点响应慢
 
-### Full series based on the specified episode
+这类问题通常来自目标站点波动或网络链路不稳定，可以尝试：
 
-```sh
-# Download the full series
-# E.g. If you provide the link of the Anime_Foo_02
-# then the full series of Anime_Foo will be downloaded (Anime_Foo_01, Anime_Foo_02, ...)
-$ hani dl -s https://hanime.tv/videos/hentai/xxx
+- 增加 `--retry`
+- 将线程数调整到 `16`、`32` 或 `64`
+- GUI 中把超时设置为 `0`，表示不限制
+- 检查系统代理是否可用
+
+### 4. 预览有文字但没有缩略图
+
+部分页面不一定提供可用封面，这种情况下文字预览仍然可用，不影响下载。
+
+### 5. GUI 下载时卡顿
+
+当前版本已经对高频日志刷新与进度更新做了节流处理。如果仍感觉界面卡顿，优先降低：
+
+- 同时运行任务数
+- 单任务线程数
+
+## 项目结构
+
+```text
+hanime-hunter/
+├─ cmd/                 # CLI 与 GUI 命令入口
+├─ internal/            # 下载器、解析器、请求逻辑
+├─ pkg/                 # 通用工具
+├─ docs/                # 文档资源
+├─ bulid/source/        # 源码副本
+├─ bulid/package/       # 打包输出
+├─ main.go              # 主入口
+├─ README.md            # 主文档
+└─ README_ZH_CN.md      # 中文文档入口说明
 ```
 
-![](./docs/assets/hanimetv/series.gif)
+## 开发说明
 
-#### Skip downloaded files
+### 本地测试
 
-If some files get stuck during downloading, stop the program and then restart the download.
-
-It will skip the files that have already been downloaded.
-
-### Download playlist
-
-```sh
-$ hani dl https://hanime.tv/playlists/xxxx
+```powershell
+go test ./...
 ```
 
-![](./docs/assets/hanimetv/playlist.gif)
+### 本地构建
 
-### Specify the output directory
-
-```sh
-# The anime will be saved in output_dir/anime_series_title/
-$ hani dl -o <output_dir>
+```powershell
+go build ./...
 ```
 
-### Specify the quality
+## 许可证
 
-```sh
-# You can specify the quality of video
-# if it is not exists, the default (highest quality) will be downloaded
-$ hani dl -q "720p" https://hanime.tv/videos/hentai/xxx
-```
-
-### Get info only
-
-```sh
-# Get only the downloadable video info:
-# title, quality, file extension
-$ hani dl -i https://hanime.tv/videos/hentai/xxx
-```
-
-
-## Issue
-
-Feel free to create issues to report bugs or request new features.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=acgtools/hanime-hunter&type=Date)](https://star-history.com/#acgtools/hanime-hunter&Date)
+项目使用 [LICENSE](./LICENSE) 中提供的许可证。
